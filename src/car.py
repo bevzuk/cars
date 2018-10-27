@@ -33,10 +33,10 @@ class Car:
         if self.speed > self.SPEED_LIMIT:
             self.speed = self.SPEED_LIMIT
 
-        self.alpha += self.speed
-        if self.alpha > 2 * math.pi:
+        if math.floor(self.alpha / 2 / math.pi) < math.floor((self.alpha + self.speed) / 2 / math.pi):
             self.laps += 1
-            self.alpha -= 2 * math.pi
+
+        self.alpha += self.speed
 
     @property
     def x(self):

@@ -7,10 +7,10 @@ import random
 width = 750
 height = 750
 isRunning = True
-NUMBER_OF_CARS = 20
+NUMBER_OF_CARS = 15
 COLLISION_DISTANCE = 10
-average_speed = 0.005
-start_time = time.clock()
+average_speed = 0.01
+start_time = time.process_time()
 max_throughput = 0
 
 
@@ -34,12 +34,12 @@ w = Canvas(top, width=width, height=height)
 w.pack()
 
 cars = []
-for i in range(NUMBER_OF_CARS):
+for i in range(NUMBER_OF_CARS, 0, -1):
     cars.append(
-        Car(alpha=-i * 0.05, radius=325,
+        Car(alpha=i * 0.05, radius=325,
             speed=random.uniform(average_speed - average_speed / 2, average_speed + average_speed / 2),
             speed_limit=average_speed * 3,
-            number=i+1,
+            number=NUMBER_OF_CARS - i + 1,
             color=(i / NUMBER_OF_CARS, 0.5, 1)))
 for i in range(NUMBER_OF_CARS):
     cars[(i + 1) % NUMBER_OF_CARS].previous_car = cars[i]
@@ -75,7 +75,7 @@ def total_laps(cars):
 def draw_info(cars):
     global max_throughput
     laps = total_laps(cars)
-    seconds_passed = time.clock() - start_time
+    seconds_passed = time.process_time() - start_time
     throughput = laps / seconds_passed
     if max_throughput < throughput:
         max_throughput = throughput
